@@ -2,6 +2,12 @@
 
 https://www.debian.org/releases/stable/amd64/apds03.html.en
 
+https://howtos.davidsebek.com/debian-f2fs.html
+
+https://askubuntu.com/questions/1013927/begin-running-scripts-local-block-done-stuck-in-initramfs-on-ubuntu-17
+
+https://wiki.archlinux.org/index.php/Syslinux
+
 # Structure
 
 - Configuration files are imported from `./configs` to the chrooted system.
