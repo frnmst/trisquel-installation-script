@@ -2,6 +2,10 @@
 
 https://www.debian.org/releases/stable/i386/apds03.html
 
+# Structure
+
+- Configuration files are imported from `./configs` to the chrooted system.
+
 # Steps
 
 ## Stage 0
@@ -29,7 +33,7 @@ https://www.debian.org/releases/stable/i386/apds03.html
 
     debootstrap --exclude=ca-certificates --arch amd64 flidas /target https://mirror.fsf.org/trisquel/
     
-2.
+2. Chroot
 
     LANG=C.UTF-8 chroot /target /bin/bash
     
@@ -77,3 +81,8 @@ https://www.debian.org/releases/stable/i386/apds03.html
 10. Install the bootloader
 
      apt-get install extlinux sgdisk
+
+## Stage 3
+
+Post install commands: extra commands are imported as-is from a shell file. For example: installing programs, adding users,
+etc...
