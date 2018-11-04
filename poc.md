@@ -16,9 +16,11 @@ https://wiki.archlinux.org/index.php/Syslinux
 
 ## Stage 0
 
-1. Partition
-2. Setup RAID, LVM or whatever (optional)
-3. Format
+NOTE: This stage needs to be done manually from a live ISO or from another system.
+
+1. Partition the devices
+2. Setup RAID, LVM, encryption(s) or whatever [optional]
+3. Format partitions with filesystems
 4. Mount
 
 ## Stage 1
@@ -31,7 +33,7 @@ https://wiki.archlinux.org/index.php/Syslinux
 
     git clone https://git.archlinux.org/arch-install-scripts.git
     
-    get the syslinux-install_update script. Custom patches are needed...
+    get the syslinux-install_update script. FIXME: Custom patches are needed...
 
 ## Stage 2
 
@@ -54,21 +56,24 @@ https://wiki.archlinux.org/index.php/Syslinux
    cd /
    ./genfstab -U / >> /etc/fstab
    
-5. Timezone
+5. Timezone FIXME
 
     dpkg-reconfigure tzdata
     
 6. Network configuration
 
-7. APT
+7. APT FIXME
 
-    Modify /etc/apt/sources.list
+    Add missing entries in `/etc/apt/sources.list`
 
-8. Locales, language, kemap
+8. Locales, language, kemap FIXME
 
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+    
     locale-gen
+    
     echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+    
     /etc/default/keyboard: 
 ```
     # KEYBOARD CONFIGURATION FILE
@@ -86,10 +91,10 @@ https://wiki.archlinux.org/index.php/Syslinux
  
     apt-get install linux-image-4.4.0-34-generic linux-image-extra-4.4.0-34-generic
 
-10. Install the bootloader: extlinux
+10. Install the bootloader
 
      apt-get install extlinux gdisk
-     ./syslinux-install_update -iam   # A modified version is needed.
+     ./syslinux-install_update -iam
 
 11. root password
 
