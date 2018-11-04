@@ -1,6 +1,6 @@
 # Resources
 
-https://www.debian.org/releases/stable/i386/apds03.html
+https://www.debian.org/releases/stable/amd64/apds03.html.en
 
 # Structure
 
@@ -25,14 +25,14 @@ https://www.debian.org/releases/stable/i386/apds03.html
 
     git clone https://git.archlinux.org/arch-install-scripts.git
     
-    get the syslinux-install_update script
+    get the syslinux-install_update script. Custom patches are needed...
 
 ## Stage 2
 
 1. Base system installation
 
     debootstrap --exclude=ca-certificates --arch amd64 flidas /target https://mirror.fsf.org/trisquel/
-    
+
 2. Chroot
 
     LANG=C.UTF-8 chroot /target /bin/bash
@@ -78,7 +78,7 @@ https://www.debian.org/releases/stable/i386/apds03.html
 
 9. Install the kernel
  
-    apt-get install linux-image-4.4.0-34-generic
+    apt-get install linux-image-4.4.0-34-generic linux-image-extra-4.4.0-34-generic
 
 10. Install the bootloader: extlinux
 
@@ -93,3 +93,9 @@ https://www.debian.org/releases/stable/i386/apds03.html
 
 Post install commands: extra commands are imported as-is from a shell file. For example: installing programs, adding users,
 etc...
+
+For example: f2fs on a root partition
+
+    apt-get install f2fs-tools
+    echo f2fs >> /etc/initramfs-tools/modules
+    update-initramfs -u
