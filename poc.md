@@ -33,7 +33,9 @@ NOTE: This stage needs to be done manually from a live ISO or from another syste
 
     git clone https://git.archlinux.org/arch-install-scripts.git
     
-    get the syslinux-install_update script. FIXME: Custom patches are needed...
+    wget https://git.parabola.nu/abslibre.git/plain/libre/syslinux/syslinux-install_update
+
+    see the syslinux-install_update.patch
 
 ## Stage 2
 
