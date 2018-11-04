@@ -52,9 +52,11 @@ https://www.debian.org/releases/stable/i386/apds03.html
 
     dpkg-reconfigure tzdata
     
-6. Network
+6. Network configuration
 
 7. APT
+
+    Modify /etc/apt/sources.list
 
 8. Locales, language, kemap
 
@@ -78,10 +80,15 @@ https://www.debian.org/releases/stable/i386/apds03.html
  
     apt-get install linux-image-4.4.0-34-generic
 
-10. Install the bootloader
+10. Install the bootloader: extlinux
 
-     apt-get install extlinux sgdisk
+     apt-get install extlinux gdisk
+     ./syslinux-install_update -iam   # A modified version is needed.
 
+11. root password
+
+    passwd 
+    
 ## Stage 3
 
 Post install commands: extra commands are imported as-is from a shell file. For example: installing programs, adding users,
