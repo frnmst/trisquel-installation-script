@@ -6,5 +6,8 @@
 
 # 3. Format partitions with filesystems
 
-# 4. Mount
-mkdir "${TARGET}"
+# 4. Make the target directory
+# mkdir "${TARGET}"
+
+# 5. Mount
+

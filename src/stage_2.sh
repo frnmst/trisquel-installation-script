@@ -9,66 +9,65 @@ debootstrap \
     "${TARGET}" \
     "${TRISQUEL_MIRROR}"
 
-# 2. Copy all files
+# 2. Generate fstab. This is possibly overridden by
+#    sub-stage 3.
 
-#for f in ${FD}; do
-#
-#done
-#cp -aR "${FILES_DIRECTORY}" 
+"${BUILD_DIRECTORY}"/genfstab -U "${TARGET}" >> "${TARGET}"/etc/fstab
 
-# 3. Chroot
+# 3. Copy all files
+
+# Get the full path of the files directory.
+files_directory="$(realpath -e "${FILES_DIRECTORY}")"
+files="$(find "${files_directory}" -type f)"
+for f in ${files}; do
+    # Get the path on the target directory for the file.
+    # Add TARGET, subtract files_directory
+    file_target_path=""${TARGET}"/"${f#"${files_directory}"}""
+
+    # Instead of mkdir and cp use rsync to preserve users and
+    # permissions.
+    mkdir -p "$(dirname "${file_target_path}")"
+    cp -aR "${f}" "${file_target_path}"
+done
+
+# 4. Chroot
 
 LANG=C.UTF-8 chroot "${TARGET}" /bin/bash
 
-# 4. makedev
+# 5. Update APT repositories
 
-apt-get install makedev
-mount none /proc -t proc
-# Check /dev TODO
+apt-get update
 
-# 5. genfstab
+# 6. Timezone
 
-cd /
-./genfstab -U / >> /etc/fstab
+# Timezone see /etc/timezone
+cp /usr/share/zoneinfo/$(cat /etc/timezone) /etc/localtime
 
-# 6. Timezone FIXME. Find an automatic way to do it.
-
-dpkg-reconfigure tzdata
-
-# 7. Network configuration
-# 8. APT FIXME
-#
-#    Add missing entries in `/etc/apt/sources.list`
-
-# 9. Locales, language, kemap FIXME
-# cp then gen
+# 7. Locales, language, keymap
 
 if [ -f '/etc/locale.gen' ]; then
     locale-gen
 fi
+# Language see /etc/locale.conf
+# Keymap see /etc/default/keyboard
 
-#    /etc/default/keyboard: 
-#```
-    # KEYBOARD CONFIGURATION FILE
-    # Consult the keyboard(5) manual page.
-
-#    XKBMODEL="pc105"
-#    XKBLAYOUT="it"
-#    XKBVARIANT=""
-#    XKBOPTIONS=""
-
-#    BACKSPACE="guess"
-#```
-
-# 9. Install the kernel. FIXME: set a generic version.
+# 8. Install the kernel. FIXME: set a generic version.
 
 apt-get install linux-image-4.4.0-34-generic linux-image-extra-4.4.0-34-generic
 
-# 10. Install the bootloader
+# 9. Install the bootloader
 
-apt-get install extlinux gdisk
-./syslinux-install_update -iam
+if [ "${BOOTLOADER}" = 'GRUB' ]; then
+    apt-get install grub os-prober
+    grub-install --target=i386-pc "${GRUB_INSTALL_DEVICE}"
+    grub-mkconfig -o /boot/grub/grub.cfg
+elif [ "${BOOTLOADER}" = 'EXTLINUX' ]; then
+    apt-get install extlinux gdisk
+    # ./syslinux-install_update -iam
+else
+    :
+fi
 
-# 11. root password
+# 10. root password
 
-passwd
+chpasswd root:"${ROOT_PASSWORD}"

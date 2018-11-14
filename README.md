@@ -23,7 +23,8 @@ NOTE: This stage needs to be done manually from a live ISO or from another syste
 1. Partition the devices
 2. Setup RAID, LVM, encryption(s) or whatever [optional]
 3. Format partitions with filesystems
-4. Mount
+4. Make the target directory
+5. Mount
 
 ### Stage 1 - pre-installation
 
@@ -33,17 +34,15 @@ NOTE: This stage needs to be done manually from a live ISO or from another syste
 ### Stage 2 - installation
 
 1. Base system installation
-2. Copy files
-3. Chroot
-4. makedev
-5. genfstab
+2. Generate fstab
+2. Copy all files
+4. Chroot
+5. Update APT repositories
 6. Timezone
-7. Network configuration
-8. APT
-9. Locales, language, kemap
-10. Install the kernel
-11. Install the bootloader
-12. root password
+7. Locales, language, kemap
+8. Install the kernel
+9. Install the bootloader
+10. root password
 
 ### Stage 3 - post-installation
 
@@ -52,8 +51,9 @@ For example installing programs and adding users.
 
 ### Stage 4 - cleanup
 
-1. Sync
-2. Unmount
+1. Exit
+2. Sync
+3. Unmount
 
 ## LICENSE
 

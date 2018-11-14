@@ -1,0 +1,8 @@
+# Trisquel repositories for supported software and updates
+deb https://archive.trisquel.info/trisquel/ flidas main
+deb-src https://archive.trisquel.info/trisquel/ flidas main
+deb https://archive.trisquel.info/trisquel/ flidas-security main
+deb-src https://archive.trisquel.info/trisquel/ flidas-security main
+deb https://archive.trisquel.info/trisquel/ flidas-updates main
+deb-src https://archive.trisquel.info/trisquel/ flidas-updates main
+
