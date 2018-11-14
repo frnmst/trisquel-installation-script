@@ -42,7 +42,7 @@ NOTE: This stage needs to be done manually from a live ISO or from another syste
 7. Locales, language, kemap
 8. Install the kernel
 9. Install the bootloader
-10. root password
+10. Root password
 
 ### Stage 3 - post-installation
 
